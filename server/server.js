@@ -18,7 +18,7 @@ const server = createServer(app);
 // Setup Socket.io with CORS
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: ["https://college-bus-tracking.vercel.app", "http://localhost:3000"],
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -33,14 +33,19 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Add this to your server setup
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// CORS configuration
+const corsOptions = {
+  origin: ["https://college-bus-tracking.vercel.app", "http://localhost:3000"],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Enable preflight for all routes
+
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-  })
-);
 
 // Attach Socket.io to Express app
 app.set("io", io);
