@@ -7,12 +7,12 @@ export default defineConfig(() => {
   return {
     base: './',
     build: {
-      outDir: 'build',
+      outDir: 'build', // Vercel will now look in "build"
     },
     css: {
       postcss: {
         plugins: [
-          autoprefixer({}), // add options if needed
+          autoprefixer(),
         ],
       },
     },
@@ -41,9 +41,6 @@ export default defineConfig(() => {
     },
     server: {
       port: 3000,
-      proxy: {
-        // https://vitejs.dev/config/server-options.html
-      },
     },
   }
 })
